@@ -8,8 +8,8 @@ export default async function createUser(
 ) {
   const hashPassword = bcrypt.hashSync(input.password, bcrypt.genSaltSync(10));
   input.password = hashPassword;
-  const userExist = await userModel.find({ email: input.email });
-  if (userExist) throw new Error("user already Exist");
+  //   const userExist = await userModel.find({ email: input.email });
+  //   if (userExist) throw new Error("user already Exist");
 
   const newUser = await userModel.create({ ...input });
 
