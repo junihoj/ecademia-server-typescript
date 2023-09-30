@@ -18,3 +18,26 @@ export default class APIResponse {
     this.count = count;
   }
 }
+
+interface IAPIResponseObject {
+  statusCode: number | null;
+  success: boolean | null;
+  message?: string | null;
+  data?: object | null | undefined;
+  count?: number | null | undefined;
+}
+export const APIResponseObject = ({
+  statusCode,
+  success,
+  data,
+  message,
+  count,
+}: IAPIResponseObject) => {
+  return {
+    statusCode: statusCode,
+    success: success,
+    data: data,
+    message,
+    count,
+  };
+};

@@ -7,6 +7,7 @@ import routes from "./routes";
 import session from "express-session";
 import MdStore from "connect-mongodb-session";
 import passport from "./config/auth/passport-strategies";
+import { errorMiddleware } from "./utils/error";
 
 async function bootstrap() {
   const app = express();
@@ -32,6 +33,7 @@ async function bootstrap() {
         secure: process.env.NODE_ENV !== "local" ? true : false,
       },
       unset: "destroy",
+      saveUninitialized: false,
     })
   );
 
@@ -47,6 +49,7 @@ async function bootstrap() {
 
   app.use(express.json({ limit: "5mb" }));
   routes(app);
+  app.use(errorMiddleware); // Error Middleware here
 
   app.listen(process.env.PORT, () => {
     console.log(`server running on port ${process.env.PORT}`);
