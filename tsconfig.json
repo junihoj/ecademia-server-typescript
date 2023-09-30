@@ -3,6 +3,9 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "baseUrl": "./src",
+    // "paths": {
+    //   "@/*": ["./src/*"]
+    // },
     "target": "es2018",
     "module": "commonjs",
     "esModuleInterop": true,

@@ -1,7 +1,6 @@
 import UserModel from "../../../user/models/user.model";
 import User from "../../../user/models/user.schema";
 import { IVerifyOptions } from "passport-local";
-import bcrypt from "bcryptjs";
 
 // type CallbackFn<T> = (err?: Error | null, ret?: T) => void;
 type CallbackFn = (
@@ -37,9 +36,10 @@ const verifyLocal = async (
 
   // verfiy password
   if (userExist) {
-    const isMatch = await bcrypt.compare(
+    const isMatch = await UserModel.verifyPassword(
       password as string,
-      userExist.password
+      userExist.password,
+      userExist.salt
     );
 
     if (!isMatch) done(new Error("Invalid Password or email"));

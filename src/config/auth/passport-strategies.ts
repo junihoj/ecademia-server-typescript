@@ -20,9 +20,16 @@ passport.serializeUser((user: Express.User, done) => {
   return done(null, user._id);
 });
 
-passport.deserializeUser((id: string, done) => {
-  UserModel.findById(id, (_err: Error, user: Express.User) => {
-    return done(null, user);
-  });
+passport.deserializeUser(async (id: string, done) => {
+  const user = await UserModel.findById(id).lean();
+  if (user) {
+    const returnedUser = { _id: user._id.toString(), email: user.email };
+    return done(null, returnedUser);
+  }
+  return done(null, user);
+
+  // UserModel.findById(id, (_err: Error, user: Express.User) => {
+  //   return done(null, user);
+  // });
 });
 export default passport;
